@@ -41,8 +41,18 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
   padding-bottom: 1rem;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.moodEmoji {
+  font-size: 1.2rem;
 }
 
 .date {
@@ -51,6 +61,7 @@
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  opacity: 0.9;
 }
 
 .closeBtn {

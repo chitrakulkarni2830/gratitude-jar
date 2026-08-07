@@ -1,11 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   --color-bg: #FAF7F2;
-  --color-blush: #FADCD9;
-  --color-blush-hover: #F2C4C0;
-  --color-lavender: #E2D7F4;
-  --color-lavender-dark: #C6B3DF;
+  --color-ui-accent: #EAE6DF;
+  --color-ui-accent-hover: #DED8CE;
+  
+  /* Mood Colors */
+  --color-1: #A8E6CE; /* mint (Happy) */
+  --color-2: #DCEDC2; /* sage (Nature) */
+  --color-3: #FFD3B5; /* peach (Food) */
+  --color-4: #FFAAA6; /* coral (Pet) */
+  --color-5: #FF8C94; /* watermelon (Love) */
+
   --color-text: #3A3440;
   --color-text-muted: #6A6073;
   --color-wood: #D1A376;
@@ -13,8 +19,8 @@
   --color-glass-highlight: rgba(255, 255, 255, 0.6);
   --color-glass-shadow: rgba(0, 0, 0, 0.08);
 
-  --font-sans: 'Outfit', sans-serif;
-  --font-hand: 'Caveat', cursive;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-hand: 'Kalam', cursive;
   
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
@@ -38,7 +44,10 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   overflow-x: hidden;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(255, 211, 181, 0.15), transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(168, 230, 206, 0.15), transparent 35%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -55,7 +64,6 @@ textarea {
   font-family: inherit;
 }
 
-/* Custom Scrollbar for notes modal */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -63,9 +71,21 @@ textarea {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-text-muted);
+  background: var(--color-ui-accent);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text);
+  background: var(--color-text-muted);
+}
+
+:global(.sr-only) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

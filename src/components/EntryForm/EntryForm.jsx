@@ -1,21 +1,23 @@
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
+import { MOODS } from '../../utils/moods';
 import styles from './EntryForm.module.css';
 
 const MAX_CHARS = 140;
 
 export function EntryForm({ onAdd }) {
   const [text, setText] = useState('');
+  const [activeMood, setActiveMood] = useState(MOODS[0].id);
   
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     const trimmed = text.trim();
     if (trimmed && trimmed.length <= MAX_CHARS) {
-      onAdd(trimmed);
+      onAdd(trimmed, activeMood);
       setText('');
     }
-  }, [text, onAdd]);
+  }, [text, activeMood, onAdd]);
 
   const handleKeyDown = useCallback((e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
@@ -36,6 +38,26 @@ export function EntryForm({ onAdd }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
     >
+      <div className={styles.moodPickerContainer}>
+        <span className={styles.moodLabel}>Pick a vibe:</span>
+        <div className={styles.moodList} role="radiogroup" aria-label="Mood picker">
+          {MOODS.map(mood => (
+            <button
+              key={mood.id}
+              type="button"
+              onClick={() => setActiveMood(mood.id)}
+              className={`${styles.moodBtn} ${activeMood === mood.id ? styles.activeMoodBtn : ''}`}
+              aria-label={mood.label}
+              aria-checked={activeMood === mood.id}
+              role="radio"
+              style={{ '--mood-color': mood.colorVar }}
+            >
+              {mood.emoji}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className={styles.inputWrapper}>
         <label htmlFor="gratitude-input" className="sr-only">
           What are you grateful for today?
@@ -47,7 +69,7 @@ export function EntryForm({ onAdd }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
-          maxLength={MAX_CHARS * 2} // Let them type past slightly so they see negative count
+          maxLength={MAX_CHARS * 2}
           rows={3}
         />
         <div className={styles.footer}>

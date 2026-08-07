@@ -6,17 +6,19 @@ Built with React 19, Vite, Matter.js, Framer Motion, and CSS Modules. This app r
 
 ## Features
 
-- **Interactive Physics:** Watch your notes fall, settle, and stack organically inside the jar using `Matter.js`.
+- **Interactive Physics:** Watch your notes fall, settle, and stack organically inside the beautifully designed jar using `Matter.js`. The 480x600 jar acts as a central visual anchor.
+- **Mood Picker:** Tag each note with a mood (Happy, Nature, Food, Pet, Love). Your selected mood dynamically styles the dropped note with a unique pastel color (Mint, Sage, Peach, Coral, Watermelon) and emoji.
+- **Positive Affirmations:** Begin your gratitude practice with a randomly selected positive affirmation from a curated bank of ~50 messages, refreshing with a subtle spin animation.
 - **Local Persistence:** Your entries are saved securely in your browser via `localStorage` (gracefully handles private browsing limits).
-- **Responsive & Accessible:** Fully keyboard navigable (Tab to focus, Esc to close notes), high contrast typography, and an invisible screen-reader list.
-- **Micro-interactions:** Delightful animations powered by Framer Motion, including a squash-and-drop entry sequence, warm paper-textured modals, and an animated empty state.
+- **Responsive & Accessible:** Fully keyboard navigable (Tab to focus, Esc to close notes, Space/Enter to select moods), high contrast typography, and an invisible screen-reader list.
+- **Micro-interactions:** Delightful animations powered by Framer Motion, including a squash-and-drop entry sequence, impact sparkles on collision, warm paper-textured modals, and an animated empty state.
 
 ## Tech Stack
 
 - **React 19 + Vite:** Fast, modern frontend architecture.
-- **Matter.js:** 2D physics engine running under a transparent canvas, syncing coordinates back to React DOM elements for styling.
+- **Matter.js:** 2D physics engine running under a transparent canvas, syncing coordinates back to React DOM elements for high-performance rendering.
 - **Framer Motion:** Entrance choreography and interactive spring animations.
-- **CSS Modules:** Scoped, vanilla CSS utilizing a custom color palette of cream, blush, and lavender.
+- **CSS Modules:** Scoped, vanilla CSS utilizing a custom color palette and typography (Plus Jakarta Sans and Kalam).
 
 ## Local Development
 

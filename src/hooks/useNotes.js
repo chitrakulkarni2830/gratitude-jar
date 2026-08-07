@@ -39,11 +39,12 @@ export function useNotes() {
     }, 500);
   }, []);
 
-  const addNote = useCallback((text) => {
+  const addNote = useCallback((text, moodId = 'happy') => {
     setNotes(prev => {
       const newNote = {
         id: crypto.randomUUID(),
         text: text.trim(),
+        mood: moodId,
         date: new Date().toISOString()
       };
       const updated = [...prev, newNote];

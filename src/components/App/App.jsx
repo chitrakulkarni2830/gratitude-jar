@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { Hero } from '../Hero/Hero';
+import { Affirmation } from '../Affirmation/Affirmation';
 import { EntryForm } from '../EntryForm/EntryForm';
 import { Jar } from '../Jar/Jar';
 import { Controls } from '../Controls/Controls';
@@ -52,6 +53,7 @@ function AppContent() {
       <main className={styles.mainContent}>
         <div className={styles.leftColumn}>
           <Hero />
+          <Affirmation />
           {error && <div className={styles.errorMessage} role="alert">{error}</div>}
           <EntryForm onAdd={handleAddNote} />
           <Controls noteCount={notes.length} onClear={handleClear} />

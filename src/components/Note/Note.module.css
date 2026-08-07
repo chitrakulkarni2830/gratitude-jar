@@ -4,9 +4,9 @@
   left: 0;
   width: 60px;
   height: 40px;
-  background-color: var(--color-lavender);
+  background-color: var(--note-color, var(--color-lavender));
   border-radius: 2px;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.4);
   cursor: pointer;
   padding: 4px 6px;
   overflow: hidden;
@@ -21,6 +21,17 @@
   z-index: 10;
 }
 
+/* Impact animation triggered via JS */
+.note[data-impact="true"] {
+  animation: impactSquash 0.3s ease-out;
+}
+
+@keyframes impactSquash {
+  0% { filter: brightness(1.2); }
+  50% { filter: brightness(1); }
+  100% { filter: brightness(1); }
+}
+
 .texture {
   position: absolute;
   top: 0;
@@ -29,6 +40,15 @@
   height: 100%;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='white' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.15'/%3E%3C/svg%3E");
   pointer-events: none;
+}
+
+.moodEmoji {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 10px;
+  opacity: 0.8;
+  z-index: 1;
 }
 
 .textSnippet {
@@ -44,4 +64,5 @@
   overflow: hidden;
   opacity: 0.8;
   text-align: left;
+  margin-top: 4px;
 }
