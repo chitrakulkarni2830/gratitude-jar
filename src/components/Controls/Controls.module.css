@@ -1,0 +1,89 @@
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.count {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.label {
+  color: var(--color-text-muted);
+}
+
+.actionPill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text-muted);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.actionPill:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text);
+}
+
+.actionPill:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.confirmPillGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.3rem 0.5rem 0.3rem 1rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(255, 0, 0, 0.1);
+}
+
+.confirmText {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.confirmYes, .confirmNo {
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.confirmYes {
+  background-color: #ffeaea;
+  color: #d32f2f;
+}
+
+.confirmYes:hover {
+  background-color: #ffd6d6;
+}
+
+.confirmNo {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.confirmNo:hover {
+  background-color: var(--color-lavender);
+}

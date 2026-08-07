@@ -1,0 +1,34 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.errorContainer h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.errorContainer p {
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+.resetButton {
+  background-color: var(--color-blush);
+  color: var(--color-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.resetButton:hover {
+  background-color: var(--color-blush-hover);
+}
