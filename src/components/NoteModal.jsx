@@ -25,7 +25,7 @@ export default function NoteModal({ isOpen, note, onClose }) {
               {note.text}
             </div>
             
-            <div className="absolute top-6 left-6 text-[24px]">
+            <div className="absolute top-6 left-6 text-[24px] [text-shadow:0_2px_4px_rgba(0,0,0,0.15)]">
               {note.mood}
             </div>
 
