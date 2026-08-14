@@ -43,25 +43,31 @@ export default function EntryForm({ onAddNote }) {
 
   return (
     <div>
-      <div className="flex items-center gap-[14px] mb-[14px] flex-wrap">
-        <span className="text-[13px] font-semibold text-ink-muted">Vibe</span>
-        <div className="flex gap-2 mr-4">
-          {MOODS.map(mood => (
-            <button
-              key={mood.id}
-              type="button"
-              onClick={() => handleMoodSelect(mood)}
-              className={`w-[30px] h-[30px] rounded-full flex items-center justify-center text-[16px] cursor-pointer transition-transform ${
-                selectedMood.id === mood.id ? 'bg-surface-sunken scale-110 shadow-sm' : 'bg-transparent hover:scale-110 opacity-70 hover:opacity-100'
-              } border-none`}
-            >
-              {mood.emoji}
-            </button>
-          ))}
+      <div className="flex flex-col gap-4 mb-4">
+        <div className="flex items-center gap-[14px]">
+          <span className="text-[13px] font-semibold text-ink-muted min-w-[40px]">Vibe</span>
+          <div className="flex flex-wrap gap-2">
+            {MOODS.map(mood => (
+              <button
+                key={mood.id}
+                type="button"
+                onClick={() => handleMoodSelect(mood)}
+                className={`w-[30px] h-[30px] rounded-full flex items-center justify-center text-[16px] cursor-pointer transition-transform ${
+                  selectedMood.id === mood.id ? 'bg-surface-sunken scale-110 shadow-sm' : 'bg-transparent hover:scale-110 opacity-70 hover:opacity-100'
+                } border-none`}
+              >
+                {mood.emoji}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <span className="text-[13px] font-semibold text-ink-muted">Color</span>
-        <PalettePicker selectedColor={selectedColor} onSelect={setSelectedColor} />
+        <div className="flex items-center gap-[14px]">
+          <span className="text-[13px] font-semibold text-ink-muted min-w-[40px]">Color</span>
+          <div className="flex flex-wrap gap-2">
+            <PalettePicker selectedColor={selectedColor} onSelect={setSelectedColor} />
+          </div>
+        </div>
       </div>
 
       <form 
