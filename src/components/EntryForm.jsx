@@ -4,11 +4,16 @@ import { Send } from 'lucide-react';
 import PalettePicker from './PalettePicker';
 
 const MOODS = [
-  { id: 'happy', emoji: '☺️', color: '#CDB4DB' },
-  { id: 'love', emoji: '❤️', color: '#FFC8DD' },
+  { id: 'happy-sparkle', emoji: '✨', color: '#CDB4DB' },
+  { id: 'nature', emoji: '🌿', color: '#FFC8DD' },
+  { id: 'food', emoji: '☕️', color: '#FFAFCC' },
+  { id: 'pet', emoji: '🐾', color: '#BDE0FE' },
+  { id: 'love-white', emoji: '🤍', color: '#A2D2FF' },
+  { id: 'happy-smile', emoji: '☺️', color: '#CDB4DB' },
+  { id: 'love-red', emoji: '❤️', color: '#FFC8DD' },
   { id: 'rainbow', emoji: '🌈', color: '#FFAFCC' },
-  { id: 'food', emoji: '🍕', color: '#BDE0FE' },
-  { id: 'pet', emoji: '🐶', color: '#A2D2FF' },
+  { id: 'food-pizza', emoji: '🍕', color: '#BDE0FE' },
+  { id: 'pet-dog', emoji: '🐶', color: '#A2D2FF' },
 ];
 
 export default function EntryForm({ onAddNote }) {
