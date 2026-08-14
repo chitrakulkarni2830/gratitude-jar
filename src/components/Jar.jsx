@@ -34,11 +34,12 @@ export default function Jar({ notes, isHydrated, onOpenNote }) {
         {/* Neck */}
         <div className="absolute top-[44px] left-1/2 -translate-x-1/2 w-[176px] h-[34px] z-30 bg-[linear-gradient(180deg,var(--color-glass-tint),rgba(255,255,255,0.12))] border-l border-r border-glass-highlight" />
 
-        {/* Notes Layer - rendered at z-10 so it's behind the jar glass (z-20) */}
-        <NoteLayer notes={notes} isHydrated={isHydrated} registerNoteRef={registerNoteRef} onOpenNote={onOpenNote} />
-
         {/* Jar Body */}
-        <div className="absolute top-[74px] left-[20px] w-[300px] h-[406px] rounded-[26px_26px_120px_120px/26px_26px_90px_90px] bg-[linear-gradient(165deg,rgba(255,255,255,0.45)_0%,var(--color-glass-tint)_35%,rgba(255,255,255,0.18)_100%)] backdrop-blur-[16px] backdrop-saturate-150 border border-white/55 shadow-[inset_0_2px_1px_rgba(255,255,255,0.7),inset_-24px_0_40px_rgba(255,255,255,0.12),inset_0_-30px_50px_rgba(255,255,255,0.10),0_30px_50px_-12px_var(--color-glass-shadow),0_4px_14px_rgba(46,42,51,0.08)] overflow-hidden z-20 pointer-events-none">
+        <div className="absolute top-[74px] left-[20px] w-[300px] h-[406px] rounded-[26px_26px_120px_120px/26px_26px_90px_90px] bg-[linear-gradient(165deg,rgba(255,255,255,0.45)_0%,var(--color-glass-tint)_35%,rgba(255,255,255,0.18)_100%)] backdrop-blur-[16px] backdrop-saturate-150 border border-white/55 shadow-[inset_0_2px_1px_rgba(255,255,255,0.7),inset_-24px_0_40px_rgba(255,255,255,0.12),inset_0_-30px_50px_rgba(255,255,255,0.10),0_30px_50px_-12px_var(--color-glass-shadow),0_4px_14px_rgba(46,42,51,0.08)] overflow-hidden z-20 pointer-events-auto">
+          
+          {/* Notes Layer - Rendered INSIDE jar body so it gets blurred by the backdrop and clipped by the overflow! */}
+          <NoteLayer notes={notes} isHydrated={isHydrated} registerNoteRef={registerNoteRef} onOpenNote={onOpenNote} />
+
           <style>{`
             .jar-highlights::before {
               content: "";
@@ -63,7 +64,7 @@ export default function Jar({ notes, isHydrated, onOpenNote }) {
               filter: blur(3px);
             }
           `}</style>
-          <div className="jar-highlights absolute inset-0" />
+          <div className="jar-highlights absolute inset-0 pointer-events-none" />
         </div>
 
         {/* Jar Shadow */}
