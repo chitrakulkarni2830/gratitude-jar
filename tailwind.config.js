@@ -30,12 +30,16 @@ export default {
           peach: '#F9DFC8',
         },
         note: {
-          // The new palette for actual note rendering requested by user
           1: '#CDB4DB',
           2: '#FFC8DD',
           3: '#FFAFCC',
           4: '#BDE0FE',
           5: '#A2D2FF',
+          6: '#A8E6CE',
+          7: '#DCEDC2',
+          8: '#FFD3B5',
+          9: '#FFAAA6',
+          10: '#FF8C94',
         },
         glass: {
           tint: 'rgba(214, 228, 240, 0.28)',

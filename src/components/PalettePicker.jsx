@@ -6,6 +6,11 @@ const PALETTE = [
   { name: 'Color 3', hex: '#FFAFCC' },
   { name: 'Color 4', hex: '#BDE0FE' },
   { name: 'Color 5', hex: '#A2D2FF' },
+  { name: 'Color 6', hex: '#A8E6CE' },
+  { name: 'Color 7', hex: '#DCEDC2' },
+  { name: 'Color 8', hex: '#FFD3B5' },
+  { name: 'Color 9', hex: '#FFAAA6' },
+  { name: 'Color 10', hex: '#FF8C94' },
 ];
 
 export default function PalettePicker({ selectedColor, onSelect }) {

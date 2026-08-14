@@ -9,11 +9,11 @@ const MOODS = [
   { id: 'food', emoji: '☕️', color: '#FFAFCC' },
   { id: 'pet', emoji: '🐾', color: '#BDE0FE' },
   { id: 'love-white', emoji: '🤍', color: '#A2D2FF' },
-  { id: 'happy-smile', emoji: '☺️', color: '#CDB4DB' },
-  { id: 'love-red', emoji: '❤️', color: '#FFC8DD' },
-  { id: 'rainbow', emoji: '🌈', color: '#FFAFCC' },
-  { id: 'food-pizza', emoji: '🍕', color: '#BDE0FE' },
-  { id: 'pet-dog', emoji: '🐶', color: '#A2D2FF' },
+  { id: 'happy-smile', emoji: '☺️', color: '#A8E6CE' },
+  { id: 'love-red', emoji: '❤️', color: '#DCEDC2' },
+  { id: 'rainbow', emoji: '🌈', color: '#FFD3B5' },
+  { id: 'food-pizza', emoji: '🍕', color: '#FFAAA6' },
+  { id: 'pet-dog', emoji: '🐶', color: '#FF8C94' },
 ];
 
 export default function EntryForm({ onAddNote }) {
