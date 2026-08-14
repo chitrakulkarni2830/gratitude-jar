@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gratitude Jar — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Outfit:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF7F1;
+    --surface: #FFFFFF;
+    --surface-sunken: #F3EEE5;
+    --ink: #2E2A33;
+    --ink-muted: #736A7D;
+    --wood-light: #D4A978;
+    --wood-dark: #A87A50;
+
+    /* pastel palette — the actual signature set, no hex picker needed */
+    --p-blush: #F6D9DE;
+    --p-butter: #FBE7B6;
+    --p-sage: #D7E8CE;
+    --p-sky: #D6E4F0;
+    --p-lavender: #E3DBF2;
+    --p-peach: #F9DFC8;
+
+    --glass-tint: rgba(214, 228, 240, 0.28);
+    --glass-highlight: rgba(255, 255, 255, 0.55);
+    --glass-shadow: rgba(46, 42, 51, 0.10);
+
+    --font-display: 'Fraunces', serif;
+    --font-ui: 'Outfit', sans-serif;
+    --font-hand: 'Caveat', cursive;
+
+    --shadow-sm: 0 1px 2px rgba(46,42,51,0.06);
+    --shadow-md: 0 8px 20px -6px rgba(46,42,51,0.12);
+    --shadow-lg: 0 24px 48px -16px rgba(46,42,51,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    font-family: var(--font-ui);
+    color: var(--ink);
+    background: var(--bg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* ---------- ambient background ---------- */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.55;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .blob-1 {
+    width: 480px; height: 480px;
+    background: var(--p-peach);
+    top: -120px; left: -100px;
+    animation: drift1 26s ease-in-out infinite;
+  }
+  .blob-2 {
+    width: 420px; height: 420px;
+    background: var(--p-sky);
+    bottom: -140px; right: -80px;
+    animation: drift2 32s ease-in-out infinite;
+  }
+  .blob-3 {
+    width: 320px; height: 320px;
+    background: var(--p-sage);
+    top: 40%; right: 15%;
+    animation: drift3 24s ease-in-out infinite;
+  }
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(60px, 40px) scale(1.1); }
+  }
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(-50px, -30px) scale(1.08); }
+  }
+  @keyframes drift3 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(-30px, 50px) scale(0.95); }
+  }
+  .noise {
+    position: fixed; inset: 0;
+    opacity: 0.025;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob { animation: none !important; }
+  }
+
+  /* ---------- layout ---------- */
+  .app {
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+    display: grid;
+    grid-template-columns: 1fr 460px;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .app { grid-template-columns: 1fr; padding: 40px 20px; }
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(40px, 5vw, 58px);
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 34ch;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  /* ---------- affirmation card ---------- */
+  .affirmation {
+    background: var(--surface);
+    border: 1px solid rgba(46,42,51,0.06);
+    border-radius: 18px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .affirmation-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .affirmation-text {
+    font-family: var(--font-hand);
+    font-size: 22px;
+    color: var(--ink);
+  }
+  .icon-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--surface-sunken);
+    display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .icon-btn:hover { background: var(--p-sky); color: var(--ink); }
+  .icon-btn:active { transform: scale(0.92) rotate(45deg); }
+
+  /* ---------- mood / color picker ---------- */
+  .picker-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .picker-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+  .swatches {
+    display: flex;
+    gap: 8px;
+  }
+  .swatch {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.15s ease;
+  }
+  .swatch:hover { transform: translateY(-2px); }
+  .swatch.active {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px var(--surface), 0 0 0 4px rgba(46,42,51,0.15);
+  }
+  .swatch-add {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--ink-muted);
+    background: none;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ---------- entry form ---------- */
+  .entry-form {
+    background: var(--surface);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(46,42,51,0.05);
+  }
+  textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    font-family: var(--font-ui);
+    font-size: 16px;
+    color: var(--ink);
+    background: none;
+    outline: none;
+    min-height: 90px;
+    line-height: 1.6;
+  }
+  textarea::placeholder { color: #B3AAB9; }
+
+  .form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .char-count {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .submit-btn {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--ink);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s ease;
+  }
+  .submit-btn:hover { background: #46404F; }
+  .submit-btn:active { transform: scale(0.9); }
+
+  .hint {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 14px;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .note-count {
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--surface-sunken);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+  }
+  .clear-btn {
+    font-size: 13px;
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ---------- THE JAR ---------- */
+  .jar-stage {
+    position: sticky;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .jar-wrap {
+    position: relative;
+    width: 340px;
+    height: 480px;
+  }
+
+  /* lid sits exactly on top of the neck — same center x, width slightly wider for a lip */
+  .lid {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 210px;
+    height: 40px;
+    border-radius: 10px;
+    z-index: 4;
+    background:
+      repeating-linear-gradient(
+        100deg,
+        var(--wood-light) 0px,
+        var(--wood-light) 3px,
+        var(--wood-dark) 3px,
+        var(--wood-dark) 4px
+      );
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,0.25),
+      inset 0 -4px 8px rgba(0,0,0,0.18),
+      0 6px 14px rgba(46,42,51,0.18);
+  }
+  .lid-band {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 224px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--wood-dark);
+    z-index: 4;
+    box-shadow: 0 3px 6px rgba(46,42,51,0.15);
+  }
+
+  /* neck connects lid straight down into the body, same visual glass as body */
+  .neck {
+    position: absolute;
+    top: 44px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 176px;
+    height: 34px;
+    z-index: 3;
+    background: linear-gradient(180deg, var(--glass-tint), rgba(255,255,255,0.12));
+    border-left: 1px solid var(--glass-highlight);
+    border-right: 1px solid var(--glass-highlight);
+  }
+
+  /* the glass body — real glassmorphism, properly shaped like a jar */
+  .jar-body {
+    position: absolute;
+    top: 74px;
+    left: 20px;
+    width: 300px;
+    height: 406px;
+    border-radius: 26px 26px 120px 120px / 26px 26px 90px 90px;
+    background: linear-gradient(
+      165deg,
+      rgba(255,255,255,0.45) 0%,
+      var(--glass-tint) 35%,
+      rgba(255,255,255,0.18) 100%
+    );
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid rgba(255,255,255,0.55);
+    box-shadow:
+      inset 0 2px 1px rgba(255,255,255,0.7),
+      inset -24px 0 40px rgba(255,255,255,0.12),
+      inset 0 -30px 50px rgba(255,255,255,0.10),
+      0 30px 50px -12px var(--glass-shadow),
+      0 4px 14px rgba(46,42,51,0.08);
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  /* specular highlight streak — the "light on glass" signature */
+  .jar-body::before {
+    content: "";
+    position: absolute;
+    top: 6%;
+    left: 10%;
+    width: 15%;
+    height: 78%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0) 75%);
+    border-radius: 50%;
+    filter: blur(4px);
+  }
+  .jar-body::after {
+    content: "";
+    position: absolute;
+    top: 12%;
+    right: 14%;
+    width: 6%;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0) 80%);
+    border-radius: 50%;
+    filter: blur(3px);
+  }
+
+  .notes-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .jar-shadow {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: 26px;
+    background: var(--glass-shadow);
+    border-radius: 50%;
+    filter: blur(14px);
+  }
+
+  /* paper note — the piece being dropped */
+  .note {
+    position: absolute;
+    width: 64px;
+    height: 42px;
+    border-radius: 3px;
+    box-shadow: 1px 3px 6px rgba(46,42,51,0.15), inset 0 0 12px rgba(255,255,255,0.5);
+    padding: 5px 7px;
+    font-family: var(--font-hand);
+    font-size: 10.5px;
+    color: var(--ink);
+    line-height: 1.25;
+    overflow: hidden;
+    left: 50%;
+    top: -60px;
+    opacity: 0;
+  }
+
+  .empty-state {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-hand);
+    font-size: 20px;
+    color: var(--ink-muted);
+    text-align: center;
+    width: 200px;
+    z-index: 2;
+  }
+
+  .jar-caption {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="noise"></div>
+
+<div class="app">
+  <div class="left">
+    <div class="eyebrow">A little ritual</div>
+    <h1>Gratitude Jar</h1>
+    <p class="subtitle">A cozy space to capture small moments of joy, appreciation, and light.</p>
+
+    <div class="affirmation">
+      <div>
+        <div class="affirmation-label">Today's affirmation</div>
+        <div class="affirmation-text" id="affirmation-text">"I trust my inner wisdom."</div>
+      </div>
+      <button class="icon-btn" onclick="rotateAffirmation()" aria-label="New affirmation">↻</button>
+    </div>
+
+    <div class="picker-row">
+      <span class="picker-label">Note color</span>
+      <div class="swatches" id="swatches"></div>
+      <button class="swatch-add" aria-label="Add custom color">+</button>
+    </div>
+
+    <form class="entry-form" onsubmit="dropNote(event)">
+      <label for="input" style="position:absolute;width:1px;height:1px;overflow:hidden;">What are you grateful for?</label>
+      <textarea id="input" placeholder="I'm grateful for..." maxlength="140"></textarea>
+      <div class="form-footer">
+        <span class="char-count" id="char-count">140</span>
+        <button type="submit" class="submit-btn" aria-label="Drop note">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </div>
+    </form>
+    <p class="hint">Cmd/Ctrl + Enter to drop</p>
+
+    <div class="controls">
+      <span class="note-count" id="note-count">0 notes saved</span>
+      <button class="clear-btn" onclick="clearJar()">Empty jar</button>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="jar-stage">
+      <div class="jar-wrap">
+        <div class="lid"></div>
+        <div class="lid-band"></div>
+        <div class="neck"></div>
+        <div class="jar-body" id="jar-body">
+          <div class="notes-layer" id="notes-layer">
+            <div class="empty-state" id="empty-state">Waiting for<br>some magic ✨</div>
+          </div>
+        </div>
+        <div class="jar-shadow"></div>
+      </div>
+      <p class="jar-caption">Every note you drop settles here — click any note to reopen it.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const AFFIRMATIONS = [
+    "I trust my inner wisdom.",
+    "I find beauty in the ordinary.",
+    "My energy creates my reality.",
+    "I am exactly where I need to be.",
+    "I choose peace over perfection."
+  ];
+
+  const PALETTE = [
+    { name: 'blush', hex: '#F6D9DE' },
+    { name: 'butter', hex: '#FBE7B6' },
+    { name: 'sage', hex: '#D7E8CE' },
+    { name: 'sky', hex: '#D6E4F0' },
+    { name: 'lavender', hex: '#E3DBF2' },
+    { name: 'peach', hex: '#F9DFC8' },
+  ];
+
+  let activeColor = PALETTE[0].hex;
+  let noteCount = 0;
+
+  const swatchesEl = document.getElementById('swatches');
+  PALETTE.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'swatch' + (i === 0 ? ' active' : '');
+    btn.style.background = c.hex;
+    btn.setAttribute('aria-label', c.name);
+    btn.onclick = () => {
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      activeColor = c.hex;
+    };
+    swatchesEl.appendChild(btn);
+  });
+
+  const input = document.getElementById('input');
+  const charCount = document.getElementById('char-count');
+  input.addEventListener('input', () => {
+    charCount.textContent = 140 - input.value.length;
+  });
+  input.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      dropNote(e);
+    }
+  });
+
+  function rotateAffirmation() {
+    const el = document.getElementById('affirmation-text');
+    const next = AFFIRMATIONS[Math.floor(Math.random() * AFFIRMATIONS.length)];
+    el.style.opacity = 0;
+    setTimeout(() => { el.textContent = `"${next}"`; el.style.opacity = 1; }, 150);
+  }
+  document.getElementById('affirmation-text').style.transition = 'opacity 0.15s ease';
+
+  function dropNote(e) {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+
+    const layer = document.getElementById('notes-layer');
+    document.getElementById('empty-state').style.display = 'none';
+
+    const note = document.createElement('div');
+    note.className = 'note';
+    note.style.background = activeColor;
+    note.textContent = text;
+
+    // stacking target: fills from the bottom of the jar, slight random x jitter
+    const row = Math.floor(noteCount / 3);
+    const col = noteCount % 3;
+    const jarWidth = 300, noteW = 64, noteH = 42;
+    const targetX = 30 + col * (noteW + 8) + (Math.random() * 10 - 5);
+    const targetY = 340 - row * (noteH + 6) + (Math.random() * 6 - 3);
+    const rot = (Math.random() * 16 - 8).toFixed(1);
+
+    note.style.left = (jarWidth / 2 - noteW / 2) + 'px';
+    note.style.top = '-60px';
+    note.style.transform = 'rotate(0deg)';
+    layer.appendChild(note);
+
+    requestAnimationFrame(() => {
+      note.style.transition = 'top 0.62s cubic-bezier(0.34, 1.05, 0.64, 1), left 0.62s cubic-bezier(0.34, 1.05, 0.64, 1), transform 0.62s cubic-bezier(0.34, 1.05, 0.64, 1), opacity 0.2s ease';
+      note.style.opacity = '1';
+      note.style.top = targetY + 'px';
+      note.style.left = targetX + 'px';
+      note.style.transform = `rotate(${rot}deg)`;
+
+      // tiny settle bounce after landing
+      setTimeout(() => {
+        note.style.transition = 'transform 0.2s ease';
+        note.style.transform = `rotate(${rot}deg) translateY(-4px)`;
+        setTimeout(() => {
+          note.style.transform = `rotate(${rot}deg) translateY(0)`;
+        }, 120);
+      }, 620);
+    });
+
+    noteCount++;
+    document.getElementById('note-count').textContent = `${noteCount} note${noteCount === 1 ? '' : 's'} saved`;
+    input.value = '';
+    charCount.textContent = '140';
+  }
+
+  function clearJar() {
+    document.getElementById('notes-layer').innerHTML = '<div class="empty-state" id="empty-state">Waiting for<br>some magic ✨</div>';
+    noteCount = 0;
+    document.getElementById('note-count').textContent = '0 notes saved';
+  }
+</script>
+
+</body>
+</html>
