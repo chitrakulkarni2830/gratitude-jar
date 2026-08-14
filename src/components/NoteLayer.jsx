@@ -29,7 +29,7 @@ export default function NoteLayer({ notes, isHydrated, registerNoteRef, onOpenNo
         )}
       </AnimatePresence>
 
-      <div className="absolute w-[480px] h-[600px] -left-[90px] -top-[149px] pointer-events-none">
+      <div className="absolute w-[600px] h-[800px] -left-[100px] -top-[180px] pointer-events-none">
         {notes.map(note => (
           <Note 
             key={note.id} 
