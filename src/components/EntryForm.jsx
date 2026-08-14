@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import PalettePicker from './PalettePicker';
 
-export default function EntryForm() {
+export default function EntryForm({ onAddNote }) {
   const [text, setText] = useState('');
   const [selectedColor, setSelectedColor] = useState('#CDB4DB');
 
@@ -12,7 +12,7 @@ export default function EntryForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
-    // TODO: Wire up to useNotes context
+    onAddNote(text.trim(), selectedColor);
     setText('');
   };
 
