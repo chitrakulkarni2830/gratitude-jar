@@ -38,11 +38,12 @@ export function useNotes() {
     return () => clearTimeout(timeoutId);
   }, [notes, isHydrated]);
 
-  const addNote = (text, color) => {
+  const addNote = (text, color, mood) => {
     const newNote = {
       id: crypto.randomUUID(),
       text,
       color,
+      mood,
       date: new Date().toISOString()
     };
     setNotes(prev => [...prev, newNote]);

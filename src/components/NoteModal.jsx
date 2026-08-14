@@ -21,9 +21,14 @@ export default function NoteModal({ isOpen, note, onClose }) {
             className="relative w-full max-w-md rounded-2xl p-8 shadow-xl min-h-[200px] flex flex-col justify-center"
             style={{ backgroundColor: note.color }}
           >
-            <div className="font-hand text-[28px] text-ink leading-relaxed">
+            <div className="font-hand text-[28px] text-ink leading-relaxed mt-4">
               {note.text}
             </div>
+            
+            <div className="absolute top-6 left-6 text-[24px]">
+              {note.mood}
+            </div>
+
             {note.date && (
               <div className="absolute bottom-4 right-6 text-ink/40 text-[14px] font-hand">
                 {new Date(note.date).toLocaleDateString()}

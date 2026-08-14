@@ -3,16 +3,25 @@ import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import PalettePicker from './PalettePicker';
 
+const MOODS = [
+  { id: 'happy', emoji: '✨', color: '#CDB4DB' },
+  { id: 'nature', emoji: '🌿', color: '#FFC8DD' },
+  { id: 'food', emoji: '☕️', color: '#FFAFCC' },
+  { id: 'pet', emoji: '🐾', color: '#BDE0FE' },
+  { id: 'love', emoji: '🤍', color: '#A2D2FF' },
+];
+
 export default function EntryForm({ onAddNote }) {
   const [text, setText] = useState('');
-  const [selectedColor, setSelectedColor] = useState('#CDB4DB');
+  const [selectedColor, setSelectedColor] = useState(MOODS[0].color);
+  const [selectedMood, setSelectedMood] = useState(MOODS[0]);
 
   const maxChars = 140;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
-    onAddNote(text.trim(), selectedColor);
+    onAddNote(text.trim(), selectedColor, selectedMood.emoji);
     setText('');
   };
 
@@ -22,10 +31,31 @@ export default function EntryForm({ onAddNote }) {
     }
   };
 
+  const handleMoodSelect = (mood) => {
+    setSelectedMood(mood);
+    setSelectedColor(mood.color); // Auto-switch color based on mood default
+  };
+
   return (
     <div>
       <div className="flex items-center gap-[14px] mb-[14px] flex-wrap">
-        <span className="text-[13px] font-semibold text-ink-muted">Note color</span>
+        <span className="text-[13px] font-semibold text-ink-muted">Vibe</span>
+        <div className="flex gap-2 mr-4">
+          {MOODS.map(mood => (
+            <button
+              key={mood.id}
+              type="button"
+              onClick={() => handleMoodSelect(mood)}
+              className={`w-[30px] h-[30px] rounded-full flex items-center justify-center text-[16px] cursor-pointer transition-transform ${
+                selectedMood.id === mood.id ? 'bg-surface-sunken scale-110 shadow-sm' : 'bg-transparent hover:scale-110 opacity-70 hover:opacity-100'
+              } border-none`}
+            >
+              {mood.emoji}
+            </button>
+          ))}
+        </div>
+
+        <span className="text-[13px] font-semibold text-ink-muted">Color</span>
         <PalettePicker selectedColor={selectedColor} onSelect={setSelectedColor} />
       </div>
 
