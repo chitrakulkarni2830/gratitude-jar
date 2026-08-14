@@ -6,6 +6,17 @@ export default function NoteLayer({ notes, isHydrated, registerNoteRef, onOpenNo
   return (
     <div className="absolute inset-0 z-10 pointer-events-auto">
       <AnimatePresence>
+        {!isHydrated && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+          >
+            <div className="w-[120px] h-[120px] rounded-full bg-white/30 animate-pulse blur-2xl" />
+          </motion.div>
+        )}
+        
         {isHydrated && notes.length === 0 && (
           <motion.div 
             initial={{ opacity: 0 }}

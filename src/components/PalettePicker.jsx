@@ -20,7 +20,7 @@ export default function PalettePicker({ selectedColor, onSelect }) {
           type="button"
           aria-label={c.name}
           onClick={() => onSelect(c.hex)}
-          className={`w-[30px] h-[30px] rounded-full border-2 cursor-pointer relative transition-transform hover:-translate-y-[2px] ${
+          className={`w-[30px] h-[30px] rounded-full border-2 cursor-pointer relative transition-transform hover:-translate-y-[2px] outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 ${
             activeColor === c.hex 
               ? 'border-ink shadow-[0_0_0_3px_var(--color-surface),0_0_0_4px_rgba(46,42,51,0.15)]' 
               : 'border-transparent'
@@ -31,7 +31,7 @@ export default function PalettePicker({ selectedColor, onSelect }) {
       <button 
         type="button"
         aria-label="Add custom color"
-        className="w-[30px] h-[30px] rounded-full border-[1.5px] border-dashed border-ink-muted bg-transparent text-ink-muted flex items-center justify-center cursor-pointer text-[14px]"
+        className="w-[30px] h-[30px] rounded-full border-[1.5px] border-dashed border-ink-muted bg-transparent text-ink-muted flex items-center justify-center cursor-pointer text-[14px] outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
       >
         +
       </button>
