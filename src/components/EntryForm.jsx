@@ -48,16 +48,18 @@ export default function EntryForm({ onAddNote }) {
           <span className="text-[13px] font-semibold text-ink-muted min-w-[40px]">Vibe</span>
           <div className="flex flex-wrap gap-2">
             {MOODS.map(mood => (
-              <button
+              <motion.button
                 key={mood.id}
                 type="button"
                 onClick={() => handleMoodSelect(mood)}
-                className={`w-[30px] h-[30px] rounded-full flex items-center justify-center text-[16px] cursor-pointer transition-transform ${
-                  selectedMood.id === mood.id ? 'bg-surface-sunken scale-110 shadow-sm' : 'bg-transparent hover:scale-110 opacity-70 hover:opacity-100'
-                } border-none`}
+                whileHover={{ scale: 1.25, y: -2 }}
+                whileTap={{ scale: 0.9 }}
+                className={`w-[32px] h-[32px] rounded-full flex items-center justify-center text-[18px] cursor-pointer transform-gpu ${
+                  selectedMood.id === mood.id ? 'bg-surface-sunken shadow-sm opacity-100' : 'bg-transparent opacity-60 hover:opacity-100'
+                } border-none outline-none focus-visible:ring-2 focus-visible:ring-ink`}
               >
                 {mood.emoji}
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
