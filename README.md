@@ -4,12 +4,6 @@
 
 **Live Demo:** https://gratitude-jar-pi.vercel.app/
 
-### The Workflow in Action 🎬
-Watch as you write a message, pick a vibe, and drop your note directly into the jar!
-![Gratitude Jar Workflow](./public/workflow.webp)
-
----
-
 ### Component Gallery 🖼️
 <div align="center">
   <img src="./public/main_view.png" alt="Main View" width="48%" />
