@@ -2,6 +2,8 @@
 
 > A beautifully crafted, interactive physics-based gratitude journal built for the modern web.
 
+**Live Demo:** https://gratitude-jar-pi.vercel.app/
+
 ### The Workflow in Action 🎬
 Watch as you write a message, pick a vibe, and drop your note directly into the jar!
 ![Gratitude Jar Workflow](./public/workflow.webp)
@@ -73,7 +75,11 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
 ## 📦 Deployment
 
-This app is production-ready. You can build it using:
+**Live Demo:** [https://gratitude-jar-pi.vercel.app/](https://gratitude-jar-pi.vercel.app/)
+
+The app is currently deployed and hosted on Vercel. 
+
+To deploy your own instance, you can build it using:
 ```bash
 npm run build
 ```
