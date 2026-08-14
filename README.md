@@ -2,7 +2,19 @@
 
 > A beautifully crafted, interactive physics-based gratitude journal built for the modern web.
 
-![Gratitude Jar Preview](./public/preview.png)
+### The Workflow in Action 🎬
+Watch as you write a message, pick a vibe, and drop your note directly into the jar!
+![Gratitude Jar Workflow](./public/workflow.webp)
+
+---
+
+### Component Gallery 🖼️
+<div align="center">
+  <img src="./public/main_view.png" alt="Main View" width="48%" />
+  <img src="./public/modal_view.png" alt="Note Modal" width="48%" />
+</div>
+
+<br />
 
 Gratitude Jar is a delightful web application designed to help you capture daily moments of thankfulness. Instead of a standard list, your entries are dropped as physics-enabled "notes" into a beautifully rendered, glassmorphic jar. Watch as your notes physically pile up over time, creating a visual representation of your gratitude!
 
